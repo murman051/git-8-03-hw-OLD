@@ -1,0 +1,17 @@
+---
+- name: Установка и настройка tuned
+  hosts: webservers
+  become: true
+  tasks:
+
+    - name: Установить пакет tuned
+      ansible.builtin.apt:
+        name: tuned
+        state: present
+        update_cache: true
+
+    - name: Запустить tuned и добавить в автозагрузку
+      ansible.builtin.service:
+        name: tuned
+        state: started
+        enabled: true

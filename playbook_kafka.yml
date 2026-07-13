@@ -1,0 +1,17 @@
+---
+- name: Скачивание и распаковка локального архива
+  hosts: webservers
+  become: true
+  tasks:
+
+    - name: Создать целевую директорию на серверах
+      ansible.builtin.file:
+        path: /opt/my_unpacked_archive
+        state: directory
+        mode: '0755'
+
+    - name: Копировать архив с управляющей машины и распаковать его
+      ansible.builtin.unarchive:
+        src: ./test_archive.tar.gz
+        dest: /opt/my_unpacked_archive
+        remote_src: false
